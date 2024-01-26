@@ -3,8 +3,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:intl/date_symbol_data_local.dart'; // 
 
-void main() {
+void main() async {
+  await initializeDateFormatting('id_ID', null);
   runApp(const MyApp());
 }
 
@@ -34,7 +36,7 @@ class ImagePickers extends StatefulWidget {
 class _ImagePickersState extends State<ImagePickers> {
   late XFile image;
   late Position? currentPosition;
-  String? addressFull ='';
+  String? addressFull = '';
   String? latLong = '';
   String? date = '';
   bool one = false;
@@ -74,7 +76,8 @@ class _ImagePickersState extends State<ImagePickers> {
       desiredAccuracy: LocationAccuracy.high,
     );
 
-    var tanggalSekarang = DateFormat.yMMMMEEEEd('id_ID').format(DateTime.now().toLocal());
+    var tanggalSekarang =
+        DateFormat.yMMMMEEEEd('id_ID').format(DateTime.now().toLocal());
     var waktuSekarang = DateFormat('HH:mm:ss').format(DateTime.now().toLocal());
     List<Placemark> placemarks =
         await placemarkFromCoordinates(position.latitude, position.longitude);
