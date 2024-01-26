@@ -83,24 +83,24 @@ Future<void> getAddress(double latitude, double longitude) async {
   List<Placemark> placemarks = await placemarkFromCoordinates(latitude, longitude);
 
   if (placemarks != null && placemarks.isNotEmpty) {
-    Placemark placemark = placemarks.first; // Mengambil Placemark pertama karena itulah yang biasanya paling akurat
+    Placemark placemark = placemarks.first; 
 
-    // Mendapatkan komponen alamat yang Anda inginkan
+    
     String? street = placemark.name; // Jl. Pakuan
     String? subLocality = placemark.subLocality; // Tegallega
     String? locality = placemark.locality; // Kota Bogor
     String? subAdminArea = placemark.subAdministrativeArea; // Kecamatan Bogor Tengah
     String? postalCode = placemark.postalCode; // 16129
     String? administrativeArea = placemark.administrativeArea; // Jawa Barat
-    String name = placemark.name!; // Nama tempat (bisa saja mengandung informasi RT/RW)
+    String name = placemark.name!; //
 
-    // Mencari RT/RW dari nama tempat
+    // Mencari RT/RW
     RegExp rtRwRegex = RegExp(r'RT\.(\d+)\/RW\.(\d+)');
     Match? rtRwMatch = rtRwRegex.firstMatch(name);
     String rt = rtRwMatch != null ? 'RT.${rtRwMatch.group(1)}/' : '';
     String rw = rtRwMatch != null ? 'RW.${rtRwMatch.group(2)}' : '';
 
-    // Membuat alamat lengkap
+   
     String addressFulls = '$street, $rt/$rw, $subLocality, $subAdminArea, $locality, $administrativeArea $postalCode';
 
     setState(() {
