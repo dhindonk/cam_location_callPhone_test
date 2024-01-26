@@ -42,7 +42,7 @@ class _CallPageState extends State<CallPage> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                openAppSettings(); // Buka pengaturan aplikasi
+                openAppSettings(); 
               },
               child: Text('Buka Pengaturan'),
             ),
