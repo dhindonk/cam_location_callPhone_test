@@ -34,9 +34,9 @@ class ImagePickers extends StatefulWidget {
 class _ImagePickersState extends State<ImagePickers> {
   late XFile image;
   late Position? currentPosition;
-  String? addressFull;
-  String? latLong;
-  String? date;
+  String? addressFull ='';
+  String? latLong = '';
+  String? date = '';
   bool one = false;
 
   void imgFromCamera() async {
@@ -82,7 +82,9 @@ class _ImagePickersState extends State<ImagePickers> {
 
     if (placemarks.isNotEmpty) {
       Placemark placemark = placemarks.first;
+      Placemark placemark2 = placemarks.last;
       String address31 = placemark.street ?? ''; // Nama jalan
+      String address33 = placemark2.street ?? ''; // Nama jalan
       String subLocality = placemark.subLocality ?? ''; // Kelurahan
       String locality = placemark.locality ?? ''; // Kota
       String subAdminArea = placemark.subAdministrativeArea ?? ''; // Kecamatan
@@ -92,7 +94,7 @@ class _ImagePickersState extends State<ImagePickers> {
       String country = placemark.country ?? ''; // Negara
 
       String fullAddress =
-          ' $address31, $subLocality, $locality, $subAdminArea, $administrativeArea $postalCode, $country';
+          ' $address31 / $address33, $subLocality, $locality, $subAdminArea, $administrativeArea $postalCode, $country';
       String dateNew = '$tanggalSekarang - $waktuSekarang';
 
       setState(() {
