@@ -74,8 +74,7 @@ class _ImagePickersState extends State<ImagePickers> {
       desiredAccuracy: LocationAccuracy.high,
     );
 
-    var tanggalSekarang =
-        DateFormat.yMMMMEEEEd().format(DateTime.now().toLocal());
+    var tanggalSekarang = DateFormat.yMMMMEEEEd('id_ID').format(DateTime.now().toLocal());
     var waktuSekarang = DateFormat('HH:mm:ss').format(DateTime.now().toLocal());
     List<Placemark> placemarks =
         await placemarkFromCoordinates(position.latitude, position.longitude);
