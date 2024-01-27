@@ -3,28 +3,29 @@ import 'package:image_picker/image_picker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:intl/date_symbol_data_local.dart'; // 
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:permission_handler/permission_handler.dart'; //
 
-void main() async {
-  await initializeDateFormatting('id_ID', null);
-  runApp(const MyApp());
-}
+// void main() async {
+//   await initializeDateFormatting('id_ID', null);
+//   runApp(const MyApp());
+// }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+// class MyApp extends StatelessWidget {
+//   const MyApp({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Tes Camera and Location',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const ImagePickers(),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Tes Camera and Location',
+//       theme: ThemeData(
+//         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+//         useMaterial3: true,
+//       ),
+//       home: const ImagePickers(),
+//     );
+//   }
+// }
 
 class ImagePickers extends StatefulWidget {
   const ImagePickers({Key? key}) : super(key: key);
@@ -40,6 +41,7 @@ class _ImagePickersState extends State<ImagePickers> {
   String? latLong = '';
   String? date = '';
   bool one = false;
+  late LocationPermission? _permissionStatus = LocationPermission.denied;
 
   void imgFromCamera() async {
     XFile? pickedImg = await ImagePicker().pickImage(
@@ -63,7 +65,37 @@ class _ImagePickersState extends State<ImagePickers> {
   }
 
   Future<void> mintaAkses() async {
-    await Geolocator.requestPermission();
+    final status = await Geolocator.requestPermission();
+
+    print('INI STATUS -----> $status');
+    if (_permissionStatus == LocationPermission.deniedForever) {
+      _showPermissionPermanentlyDeniedDialog();
+    }
+    setState(() {
+      _permissionStatus = status;
+    });
+  }
+
+  void _showPermissionPermanentlyDeniedDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Izin Lokasi Diperlukan'),
+          content: Text(
+              'Anda perlu mengizinkan aplikasi untuk mengakses lokasi di pengaturan.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                openAppSettings();
+              },
+              child: Text('Buka Pengaturan'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   bool isLoading = false;
@@ -152,7 +184,13 @@ class _ImagePickersState extends State<ImagePickers> {
                     child: CircularProgressIndicator(),
                   )
                 : ElevatedButton(
-                    onPressed: one == false ? () => getLocation() : () {},
+                    onPressed: () {
+                      if (_permissionStatus == LocationPermission.always || _permissionStatus == LocationPermission.whileInUse ) {
+                        one == false ? getLocation() : one ;
+                      } else {
+                        mintaAkses();
+                      }
+                    },
                     child: one == false
                         ? const Text('Cek COntary')
                         : const Text("CAN'T KLIK"),

@@ -1,5 +1,5 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 
 class NetworkController extends GetxController {
@@ -28,6 +28,13 @@ class NetworkController extends GetxController {
   }
 
   void _showNoInternetSnackbar() {
+    // if (!Get.isOverlaysOpen) {
+    //   WidgetsBinding.instance!.addPostFrameCallback((_) {
+    //     _showNoInternetSnackbar();
+    //   });
+    //   return;
+    // }
+    
     Get.rawSnackbar(
       messageText: const Text(
         'TIDAK ADA JARINGAN',

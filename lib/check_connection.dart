@@ -2,26 +2,26 @@ import 'package:camera_location/dependency_injection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-Future<void> main() async {
-  runApp(const MyApp());
-  DependencyInjection.init();
-}
+// Future<void> main() async {
+//   runApp(const MyApp());
+//   DependencyInjection.init();
+// }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+// class MyApp extends StatelessWidget {
+//   const MyApp({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Network Cek',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const CekKoneksi(),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return GetMaterialApp(
+//       title: 'Network Cek',
+//       theme: ThemeData(
+//         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+//         useMaterial3: true,
+//       ),
+//       home: const CekKoneksi(),
+//     );
+//   }
+// }
 
 class CekKoneksi extends StatefulWidget {
   const CekKoneksi({super.key});

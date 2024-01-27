@@ -1,8 +1,15 @@
+import 'package:camera_location/camera_location.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
+import 'dependency_injection.dart';
 import 'direct_phone_number.dart';
 
-Future<void> main() async {
+void main() async {
+  await initializeDateFormatting('id_ID', null);
+  DependencyInjection.init();
+
   runApp(MyApp());
 }
 
@@ -11,8 +18,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: CallPage(),
+    return GetMaterialApp(
+      home: ImagePickers(),
     );
   }
 }
